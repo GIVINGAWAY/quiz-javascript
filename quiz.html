@@ -21,73 +21,46 @@
         
 	    <script>
     	    
-    	    // We have to create a set of buttons to fire functions
-    	    var btns = ('<button type="button" style="padding:10px; margin:10px" onclick="decrypt()">Decrypt!</button>' +
-    	        '<button type="button" style="padding:10px; margin:10px" onclick="encrypt()">Encrypt!</button>' +
-    	        '<button type="button" style="padding:10px; margin:10px" onclick="changeText()">New Text!</button>');
-    	    document.body.innerHTML += (btns);
+    	    // We create a button to fire a function	        	        
+	        var btn = ('<button type="button" style="padding:10px" onclick="crypt()">Scramble/Unscramble</button>');
             
-    	    // We store clear text for futher development
-    	    var str = $("[hidden='']").text();
+    	    // We add the button first time
+	        document.body.innerHTML += (btn);
 
-    	    function decrypt() {
-    	        // We have to check if textArea exist to handle Decrypt Button
+	        // As requested: This function is an object and an answer. This function will scramble and uscramble any text from textarea any number of times!   
+	        function crypt() {
+	            var str; //This will be our message
+	            var i;
+	            var n;
     	        if (document.getElementById("newText")) {
     	            str = $('textarea#newText').val();
-    	            reload();
-    	        }     
-                    
-    	        // As requested: Using jQuery we unscramble the message.
-    	        // We have to unwrap hidden spans and remove encrypted elements to receive clear text. Two lines of code only! 
-    	        $("span , br").remove();    
-    	        reload();        
-    	    }
-                
-    	    var i;
-    	    var n;
+    	            var arr = str.split("");
+    	            var text = "";
+    	            var curStr = "";
 
-    	    // Handy functon to reload fields
-    	    function reload() {
-    	        document.body.innerHTML = (str);
-    	        document.body.innerHTML += (btns);    
-    	    }
-               	            
-    	    function encrypt() {
-    	        if (document.getElementById("newText")) {
-    	            str = $('textarea#newText').val();
-    	            reload();
-    	        }
-	                 
-    	        //As requested: We write a function that scrumble a message      
-    	        var arr = str.split("");
-    	        var text = "";
-	                
-    	        for (i = 0; i < arr.length; i++) {
-    	            //console.log("i is now: " + i);
-	                    
-    	            var randNum = Math.floor(Math.random() * 11); // returns a random number between 0 and 10
-    	            var encrypted = "";
-    	            for (n = 0; n < randNum; n++) {
-    	                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    	                var randChar = "<span>" + possible[Math.floor(Math.random() * 11)] + "</span >";
-    	                encrypted += randChar;
-    	                //console.log("n is now: " + n + "RandNum is now: " + randNum);
+    	            for (i = 0; i < arr.length; i++) {
+    	                //console.log("i is now: " + i);	                    
+    	                var randNum = Math.floor(Math.random() * 11); // returns a random number between 0 and 10
+    	                var encrypted = "";
+    	                for (n = 0; n < randNum; n++) {
+    	                    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    	                    var randChar = "<span>" + possible[Math.floor(Math.random() * 11)] + "</span >";
+    	                    encrypted += randChar;
+    	                    //console.log("n is now: " + n + "RandNum is now: " + randNum);
+    	                }
+    	                text += arr[i] + '</span>' + encrypted + '<span hidden="">';
     	            }
-	                  
-    	            text += arr[i] + '</span>' + encrypted + '<span hidden="">';
-
+    	            curStr += ('<span hidden="">' + text + '</span>');
+    	            str = curStr;
+    	            document.body.innerHTML = (str + btn);
+    	        } else {
+    	          // As requested: Using jQuery we unscramble the text
+    	                str = $("[hidden='']").text();
+    	                document.body.innerHTML = ("<textarea style='width:500px; height:100px' id='newText'>" + str + "</textarea>" +
+                        "\n<p style='margin-left:26px; color: rgb(255, 52, 52)'>Scramble and Unscramble any text from textarea any number of times!</p>\n" + btn);
     	        }
-	                 	                
-    	        document.body.innerHTML += ('<br/>' + '<span hidden="">' + text + '</span>');
-
     	    };
-
-    	    // As requested: We have to allow to scramble and unscramble any text from textarea any number of times
-    	    function changeText() {
-    	        document.body.innerHTML = ("<textarea style='width:500px; height:100px' id='newText'></textarea>");
-    	        document.body.innerHTML += (btns);
-    	    };
-
+    	    
     	</script>
         
 	</body>
